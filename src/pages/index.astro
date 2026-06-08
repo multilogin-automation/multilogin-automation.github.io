@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import ToolCatalog from "../components/ToolCatalog.astro";
+import FAQ from "../components/FAQ.astro";
+import Footer from "../components/Footer.astro";
+import { tools, getCategories } from "../lib/catalog";
+import {
+  homeTitle,
+  homeDescription,
+  homeJsonLd,
+  canonicalUrl,
+} from "../lib/seo";
+
+const categoryCount = getCategories().length;
+const toolCount = tools.length;
+---
+
+<Layout
+  title={homeTitle(toolCount)}
+  description={homeDescription(toolCount)}
+  canonical={canonicalUrl("/")}
+  jsonLd={homeJsonLd(toolCount, tools)}
+>
+  <main>
+    <Hero toolCount={toolCount} categoryCount={categoryCount} />
+    <ToolCatalog
+      tools={tools}
+      heading="Browse All Tools"
+      subheading="Discover 120 open-source Playwright CDP demos. Filter by category or search by name."
+    />
+    <FAQ />
+    <Footer />
+  </main>
+</Layout>

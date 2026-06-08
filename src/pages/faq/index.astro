@@ -1,0 +1,47 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer.astro";
+import FaqList from "../../components/FaqList.astro";
+import { faqJsonLd } from "../../lib/faq-data";
+import { canonicalUrl } from "../../lib/seo";
+import { SDK_URL, TELEGRAM_URL, TELEGRAM_LABEL } from "../../lib/constants";
+
+const title = "FAQ — Multilogin X Automation SDK";
+const description =
+  "Frequently asked questions about Multilogin X, Playwright CDP automation, legal use, free SDK vs Telegram, SAAS50, migration, proxies, and the 120-tool catalog.";
+---
+
+<Layout
+  title={title}
+  description={description}
+  canonical={canonicalUrl("/faq")}
+  jsonLd={faqJsonLd()}
+>
+  <main>
+    <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+      <nav class="mb-6 text-sm text-gray-500" aria-label="Breadcrumb">
+        <a href="/" class="transition hover:text-white">Home</a>
+        <span class="mx-2">/</span>
+        <span class="text-gray-400">FAQ</span>
+      </nav>
+
+      <FaqList />
+
+      <div class="mt-10 flex flex-wrap gap-3 border-t border-border pt-8">
+        <a href="/docs/quick-start" class="text-sm text-blue-400 hover:text-blue-300">
+          Quick Start Guide &rarr;
+        </a>
+        <a href="/tools" class="text-sm text-blue-400 hover:text-blue-300">
+          Tool Catalog &rarr;
+        </a>
+        <a href={SDK_URL} target="_blank" rel="noopener noreferrer" class="text-sm text-blue-400 hover:text-blue-300">
+          GitHub SDK &rarr;
+        </a>
+        <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" class="text-sm text-blue-400 hover:text-blue-300">
+          {TELEGRAM_LABEL} &rarr;
+        </a>
+      </div>
+    </div>
+    <Footer />
+  </main>
+</Layout>

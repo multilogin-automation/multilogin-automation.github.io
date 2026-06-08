@@ -1,0 +1,57 @@
+---
+import type { Tool } from "../types";
+import { toolSlug, categoryColors } from "../lib/catalog";
+import { sanitizeDisplay } from "../lib/display";
+
+interface Props {
+  tools: Tool[];
+  categorySlug: string;
+}
+
+const { tools, categorySlug } = Astro.props;
+---
+
+<section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+  <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+    <h2 class="text-xl font-semibold text-white">
+      {tools.length} Tools in This Category
+    </h2>
+    <a href="/tools" class="text-sm text-blue-400 transition hover:text-blue-300">
+      View full catalog &rarr;
+    </a>
+  </div>
+
+  <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      tools.map((tool) => {
+        const slug = toolSlug(tool);
+        return (
+          <li>
+            <a
+              href={`/tools/${slug}`}
+              class="group flex h-full flex-col rounded-xl border border-border bg-surface-raised p-5 transition hover:border-accent/50 hover:bg-surface-overlay"
+            >
+              <div class="mb-2 flex items-center justify-between gap-2">
+                <span class="font-mono text-xs text-gray-500">#{tool.number}</span>
+                <span
+                  class={`rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase ${categoryColors[categorySlug] ?? ""}`}
+                >
+                  {tool.category}
+                </span>
+              </div>
+              <h3 class="font-semibold text-white group-hover:text-blue-300">
+                {tool.name}
+              </h3>
+              <p class="mt-2 flex-1 text-sm text-gray-400 line-clamp-2">
+                {sanitizeDisplay(tool.description)}
+              </p>
+              <span class="mt-3 text-xs font-medium text-blue-400 group-hover:text-blue-300">
+                View tool page &rarr;
+              </span>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>

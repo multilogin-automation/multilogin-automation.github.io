@@ -1,0 +1,42 @@
+---
+interface Props {
+  code: string;
+  lang?: string;
+}
+
+const { code, lang = "bash" } = Astro.props;
+const blockId = `code-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div class="group relative my-4">
+  <div class="flex items-center justify-between rounded-t-lg border border-b-0 border-border bg-surface-overlay px-4 py-2">
+    <span class="font-mono text-xs text-gray-500">{lang}</span>
+    <button
+      type="button"
+      class="copy-btn rounded px-2 py-1 text-xs text-gray-400 transition hover:bg-surface-raised hover:text-white"
+      data-target={blockId}
+      aria-label="Copy code"
+    >
+      Copy
+    </button>
+  </div>
+  <pre class="overflow-x-auto rounded-b-lg border border-border bg-surface-raised p-4"><code id={blockId} class="font-mono text-sm text-gray-300">{code}</code></pre>
+</div>
+
+<script>
+  document.querySelectorAll(".copy-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.getAttribute("data-target");
+      const el = id ? document.getElementById(id) : null;
+      if (!el) return;
+      try {
+        await navigator.clipboard.writeText(el.textContent ?? "");
+        const label = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = label; }, 2000);
+      } catch {
+        btn.textContent = "Failed";
+      }
+    });
+  });
+</script>

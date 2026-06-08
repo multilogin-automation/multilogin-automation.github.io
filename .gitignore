@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+
+# Catalog is fetched at build from SDK repo — never commit
+catalog.json
+src/data/catalog.json
+
+# No Python SDK / demos in this repo
+*.py
+demos/

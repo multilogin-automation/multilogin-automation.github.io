@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://multilogin-automation.github.io/sitemap-index.xml

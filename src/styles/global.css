@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-gray-100 antialiased;
+  }
+
+  img {
+    loading: lazy;
+    decoding: async;
+  }
+
+  ::selection {
+    @apply bg-accent/40 text-white;
+  }
+}
+
+@layer components {
+  .tool-card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 200px;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 bg-clip-text text-transparent;
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "multilogin-automation.github.io",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "fetch-catalog": "node scripts/fetch-catalog.mjs",
+    "prebuild": "npm run fetch-catalog",
+    "dev": "npm run fetch-catalog && astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "verify": "node scripts/verify-build.mjs && node scripts/verify-interactive.mjs && node scripts/verify-full.mjs && node scripts/verify-categories.mjs && node scripts/verify-seo.mjs && node scripts/verify-ux.mjs",
+    "lighthouse": "node scripts/lighthouse.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.3.1",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.7.10",
+    "tailwindcss": "^3.4.17"
+  }
+}

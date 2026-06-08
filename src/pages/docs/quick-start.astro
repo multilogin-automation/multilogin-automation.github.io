@@ -1,0 +1,117 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+import { SDK_URL, AFFILIATE_URL } from "../../lib/constants";
+import { canonicalUrl } from "../../lib/seo";
+
+const title = "Quick Start — Multilogin X Automation SDK";
+const description =
+  "Install the Multilogin X Automation SDK: clone GitHub repo, configure .env credentials, install Python dependencies, and run demos with RUN-DEMOS.bat on Windows.";
+---
+
+<Layout title={title} description={description} canonical={canonicalUrl("/docs/quick-start")}>
+  <main>
+    <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+      <nav class="mb-6 text-sm text-gray-500" aria-label="Breadcrumb">
+        <a href="/" class="transition hover:text-white">Home</a>
+        <span class="mx-2">/</span>
+        <span class="text-gray-400">Quick Start</span>
+      </nav>
+
+      <h1 class="text-3xl font-bold text-white sm:text-4xl">Quick Start Guide</h1>
+      <p class="mt-4 text-lg text-gray-400">
+        Get the Multilogin X Automation SDK running locally in minutes. All 120 Playwright CDP demos
+        are open source on{" "}
+        <a href={SDK_URL} target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">
+          GitHub
+        </a>.
+      </p>
+
+      <section class="mt-10">
+        <h2 class="text-xl font-semibold text-white">1. Clone the SDK repository</h2>
+        <p class="mt-2 text-sm text-gray-400">
+          Download the full source including all demo scripts and the interactive demo launcher.
+        </p>
+        <CodeBlock
+          lang="bash"
+          code={`git clone https://github.com/multilogin-automation/multilogin-automation.git
+cd multilogin-automation`}
+        />
+      </section>
+
+      <section class="mt-10">
+        <h2 class="text-xl font-semibold text-white">2. Install Python dependencies</h2>
+        <p class="mt-2 text-sm text-gray-400">
+          Requires Python 3.10+ and Multilogin X desktop app running locally.
+        </p>
+        <CodeBlock lang="bash" code="pip install -r requirements.txt" />
+      </section>
+
+      <section class="mt-10">
+        <h2 class="text-xl font-semibold text-white">3. Configure environment variables</h2>
+        <p class="mt-2 text-sm text-gray-400">
+          Copy the example env file and add your Multilogin X API credentials.
+        </p>
+        <CodeBlock lang="bash" code="copy .env.example .env" />
+        <p class="mt-4 text-sm text-gray-400">Edit <code class="text-gray-300">.env</code> with your values:</p>
+        <CodeBlock
+          lang="env"
+          code={`MLX_USERNAME=your@email.com
+MLX_PASSWORD=your_password
+MLX_FOLDER_ID=optional_folder_id
+MLX_WORKSPACE_ID=optional_workspace_id`}
+        />
+      </section>
+
+      <section class="mt-10">
+        <h2 class="text-xl font-semibold text-white">4. Run demos (Windows)</h2>
+        <p class="mt-2 text-sm text-gray-400">
+          Use the included batch launcher to pick and run any of the 120 demo scripts.
+        </p>
+        <CodeBlock lang="bat" code="RUN-DEMOS.bat" />
+        <p class="mt-4 text-sm text-gray-400">
+          Or run a single demo directly with Python:
+        </p>
+        <CodeBlock lang="bash" code="python demos/01_list_profiles.py" />
+      </section>
+
+      <section class="mt-10">
+        <h2 class="text-xl font-semibold text-white">5. Browse the tool catalog</h2>
+        <p class="mt-2 text-sm text-gray-400">
+          Explore all 120 demos on this site with descriptions, categories, and GitHub source links.
+        </p>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href="/tools" class="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white hover:bg-accent-hover">
+            Browse Tools
+          </a>
+          <a
+            href={SDK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded-lg border border-border px-4 py-2 text-sm font-semibold text-gray-200 hover:border-gray-500"
+          >
+            View on GitHub
+          </a>
+        </div>
+      </section>
+
+      <section class="mt-10 rounded-xl border border-amber-500/30 bg-amber-500/10 p-5">
+        <h2 class="text-lg font-semibold text-amber-200">Need Multilogin X?</h2>
+        <p class="mt-2 text-sm text-gray-400">
+          The SDK requires Multilogin X antidetect browser profiles. Use affiliate code
+          <span class="font-mono text-amber-300">SAAS50</span> at checkout.
+        </p>
+        <a
+          href={AFFILIATE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-3 inline-block text-sm font-medium text-amber-300 hover:text-amber-200"
+        >
+          Get Multilogin X &rarr;
+        </a>
+      </section>
+    </article>
+    <Footer />
+  </main>
+</Layout>

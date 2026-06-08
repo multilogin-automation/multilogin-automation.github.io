@@ -1,0 +1,64 @@
+name: Sync catalog and deploy
+
+on:
+  schedule:
+    # Daily at 06:00 UTC — rebuild when SDK catalog.json changes
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  CATALOG_URL: https://raw.githubusercontent.com/multilogin-automation/multilogin-automation/main/demos/catalog.json
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch catalog from SDK repo
+        run: npm run fetch-catalog
+
+      - name: Report catalog tool count
+        id: catalog
+        run: |
+          COUNT=$(node -e "const c=require('./src/data/catalog.json'); console.log(c.length)")
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "Catalog synced: **$COUNT tools** from $CATALOG_URL" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Build site
+        run: npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
